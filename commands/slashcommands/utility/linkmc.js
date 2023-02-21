@@ -23,14 +23,17 @@ module.exports = {
      */
     async execute(interaction) {
         let mcusr = interaction.options.getString("mcusername")
+        let collection = await dbclient.db("ntcmcbot").collection("users");
+        let userdb = await collection.findOne({DISCORDID: interaction.member.id})
+
         interaction.deferReply()
         let highest = "default";
         switch(true) {
-        case interaction.member.roles.cache.has(process.env.DISCORDSTAFF_ROLE):
-            highest = "discordstaff";
-            break;
         case interaction.member.roles.cache.has(process.env.MCSTAFF_ROLE):
             highest = "mcstaff";
+            break;
+        case interaction.member.roles.cache.has(process.env.DISCORDSTAFF_ROLE):
+            highest = "discordstaff";
             break;
         case interaction.member.roles.cache.has(process.env.PATREON_ROLE):
             highest = "patreon";
@@ -40,7 +43,7 @@ module.exports = {
             break;
         }
 
-        let collection = await dbclient.db("ntcmcbot").collection("users");
+        collection = await dbclient.db("ntcmcbot").collection("users");
         // perform actions on the collection object
         collection.updateOne(
             { DISCORDID: `${interaction.member.id}` },   // Query parameter
@@ -51,11 +54,6 @@ module.exports = {
             }},
             { upsert: true }      // Options
         )
-        collection = await dbclient.db("ntcmcbot").collection("users");
-        if(interaction.member.id === await collection.findOne({MCUSR: mcusr}).DISCORDID){
-            console.log("beans")
-        }
-
         
         const rcon = new Rcon({
             host: `${process.env.MCHOST}`,
@@ -71,10 +69,11 @@ module.exports = {
         connected = false
         error = e
         }
-        
-
-        let clear = await rcon.send(`lp user ${mcusr} parent clear`)
-        let res = await rcon.send(`lp user ${mcusr} parent add ${highest}`);
+        console.log(userdb)
+        if(userdb.USRROLE != undefined){
+            let clear = await rcon.send(`lp user ${mcusr} group remove ${userdb.USRROLE}`)
+        }
+        let res = await rcon.send(`lp user ${mcusr} group add ${highest}`);
         console.log(res)
         await sendResponse(interaction, `added ${mcusr} to the role ${highest}`);
         await rcon.end();

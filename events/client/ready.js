@@ -21,16 +21,18 @@ module.exports = {
             let guild = client.guilds.cache.get(`${process.env.GUILD_ID}`)
             const collection = dbclient.db("ntcmcbot").collection("users");
             const cursor = collection.find().forEach(async function(user){
+                
                 let member = guild.members.cache.get(`${user.DISCORDID}`)
                 console.log(`updating ${member.name}`)
                 
                 let highest = "default";
                 switch(true) {
-                case interaction.member.roles.cache.has(process.env.DISCORDSTAFF_ROLE):
-                    highest = "discordstaff";
-                    break;
+                
                 case interaction.member.roles.cache.has(process.env.MCSTAFF_ROLE):
                     highest = "mcstaff";
+                    break;
+                case interaction.member.roles.cache.has(process.env.DISCORDSTAFF_ROLE):
+                    highest = "discordstaff";
                     break;
                 case interaction.member.roles.cache.has(process.env.PATREON_ROLE):
                     highest = "patreon";
@@ -40,7 +42,6 @@ module.exports = {
                     break;
                 
                 }
-                console.log(user.USRROLE)
                 if(highest != user.USRROLE){
                     interaction.deferReply()
                     collection.updateOne(
@@ -67,11 +68,8 @@ module.exports = {
                     }
                     
             
-                    let clear = await rcon.send(`lp user ${mcusr} parent clear`)
-                    let res = await rcon.send(`lp user ${user.MCUSR} parent add ${highest}`);
-                    sendResponse(interaction, `did it boss`)
-                }else {
-                    sendReply(interaction, `nothing to do here boss`)
+                    let clear = await rcon.send(`lp user ${mcusr} group remove ${user.USRROLE}`)
+                    let res = await rcon.send(`lp user ${user.MCUSR} group add ${highest}`);
                 }
             })
         })

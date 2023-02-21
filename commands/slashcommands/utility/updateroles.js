@@ -21,17 +21,17 @@ module.exports = {
         await interaction.deferReply()
         const collection = dbclient.db("ntcmcbot").collection("users");
         const cursor = await collection.find().forEach(async function(user){
-            console.log(user.DISCORDID)
+
             let member = await interaction.guild.members.cache.get(user.DISCORDID)
             console.log(`checking ${member.user.username}`)
             
             let highest = "stdusr";
             switch(true) {
-            case interaction.member.roles.cache.has(process.env.DISCORDSTAFF_ROLE):
-                highest = "discordstaff";
-                break;
             case interaction.member.roles.cache.has(process.env.MCSTAFF_ROLE):
                 highest = "mcstaff";
+                break;
+            case interaction.member.roles.cache.has(process.env.DISCORDSTAFF_ROLE):
+                highest = "discordstaff";
                 break;
             case interaction.member.roles.cache.has(process.env.PATREON_ROLE):
                 highest = "patreon";
@@ -41,7 +41,6 @@ module.exports = {
                 break;
             
             }
-            console.log(user.USRROLE)
             if(highest != user.USRROLE){
                 collection.updateOne(
                     { DISCORDID: `${user.DISCORDID}` },   // Query parameter
@@ -67,8 +66,8 @@ module.exports = {
                 }
                 
         
-                let clear = await rcon.send(`lp user ${user.MCUSR} parent clear`)
-                let res = await rcon.send(`lp user ${user.MCUSR} parent add ${highest}`);
+                let clear = await rcon.send(`lp user ${user.MCUSR} group remove ${user.USRROLE}`)
+                let res = await rcon.send(`lp user ${user.MCUSR} group add ${highest}`);
                 changed.push(`${member.user.username}(${user.MCUSER}) -> ${highest}`)
             }
         if (changed.length <= 0){
