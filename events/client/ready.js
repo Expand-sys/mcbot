@@ -24,7 +24,7 @@ module.exports = {
                 let member = guild.members.cache.get(`${user.DISCORDID}`)
                 console.log(`updating ${member.name}`)
                 
-                let highest = "stdusr";
+                let highest = "default";
                 switch(true) {
                 case interaction.member.roles.cache.has(process.env.DISCORDSTAFF_ROLE):
                     highest = "discordstaff";

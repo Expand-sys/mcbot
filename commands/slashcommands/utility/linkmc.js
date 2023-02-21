@@ -24,7 +24,7 @@ module.exports = {
     async execute(interaction) {
         let mcusr = interaction.options.getString("mcusername")
         interaction.deferReply()
-        let highest = "stdusr";
+        let highest = "default";
         switch(true) {
         case interaction.member.roles.cache.has(process.env.DISCORDSTAFF_ROLE):
             highest = "discordstaff";
