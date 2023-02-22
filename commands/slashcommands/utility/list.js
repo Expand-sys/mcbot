@@ -1,5 +1,5 @@
 const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
-const { sendResponse, sendReply } = require('../../../utils/utils');
+const { sendResponse, sendReply, channelSend } = require('../../../utils/utils');
 const path = require('path');
 const { Rcon } = require("rcon-client");
 const rconpass = process.env.RCONPASS;
@@ -16,7 +16,6 @@ module.exports = {
      * @param {CommandInteraction} interaction 
      */
     async execute(interaction) {
-
         console.log("test")
         console.log(host);
         const rcon = new Rcon({
@@ -36,7 +35,7 @@ module.exports = {
         let res = await rcon.send(`list`);
         console.log(res)
         var rep = res.replace(/§[6crf7]/g, "");
-        sendReply(interaction, `${rep}`, [],[],[], false);
+        interaction.reply(`${rep}`, [],[],[], false);
         rcon.end();
     }
 }

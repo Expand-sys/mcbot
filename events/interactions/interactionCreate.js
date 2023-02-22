@@ -1,6 +1,7 @@
 const { client, CommandInteraction, InteractionType } = require('discord.js');
 const cooldowns = new Map();
 const path = require('path');
+const { channelSend } = require("../../utils/utils")
 
 module.exports = {
     name: 'interactionCreate',
@@ -112,6 +113,7 @@ module.exports = {
             // Execure the command
             command.execute(interaction, client);
             // log command usage
+            channelSend(`${interaction.member.displayName} used /${command.name}`)
             console.log(`\x1b[36m%s\x1b[0m`, `${interaction.member.displayName}`, `used /${command.name}`);
         }
     }

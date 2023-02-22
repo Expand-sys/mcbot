@@ -1,5 +1,7 @@
 const { CommandInteraction } = require('discord.js');
 const attachmentMap = new Map();
+const winston = require('winston');
+const { client } = require("../index")
 
 /**
  * Edit the reply to an interaction
@@ -170,6 +172,13 @@ function getAttachment(key) {
     return attachment;
 }
 
+function channelSend(info){
+    let chan = client.channels.cache.get(`${process.env.LOGGERCHAN}`)
+    chan.send(info)
+}
+
+
+
 module.exports = {
     sendResponse,
     sendReply,
@@ -181,5 +190,6 @@ module.exports = {
     dbDeleteOne,
     dbDeleteMany,
     addAttachment,
-    getAttachment
+    getAttachment,
+    channelSend
 }
