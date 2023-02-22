@@ -2,7 +2,7 @@ console.time('Time to online');
 require("dotenv").config();
 const Discord = require("discord.js");
 const { dbclient } = require("./mongo");
-const client = new Discord.Client({ intents: [Discord.GatewayIntentBits.Guilds, Discord.GatewayIntentBits.GuildMembers, Discord.GatewayIntentBits.GuildMessages, Discord.GatewayIntentBits.MessageContent], partials: [Discord.Partials.Channel] });
+const client = new Discord.Client({ intents: [Discord.GatewayIntentBits.Guilds, Discord.GatewayIntentBits.GuildMembers], partials: [Discord.Partials.Channel] });
 
 require('console-stamp')(console, {
     format: ':date(dd mmmm yyyy HH:MM:ss) :label'
