@@ -22,11 +22,11 @@ module.exports = {
      * @param {CommandInteraction} interaction 
      */
     async execute(interaction) {
+
         let mcusr = interaction.options.getString("mcusername")
         let collection = await dbclient.db("ntcmcbot").collection("users");
         let userdb = await collection.findOne({DISCORDID: interaction.member.id})
 
-        interaction.deferReply()
         let highest = "default";
         switch(true) {
         case interaction.member.roles.cache.has(process.env.MCSTAFF_ROLE):
