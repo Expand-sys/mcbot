@@ -26,7 +26,7 @@ module.exports = {
         let mcusr = interaction.options.getString("mcusername")
         let collection = await dbclient.db("ntcmcbot").collection("users");
         let userdb = await collection.findOne({DISCORDID: interaction.member.id})
-
+        interaction.deferReply()
         let highest = "default";
         switch(true) {
         case interaction.member.roles.cache.has(process.env.MCSTAFF_ROLE):
@@ -75,7 +75,7 @@ module.exports = {
         }
         let res = await rcon.send(`lp user ${mcusr} group add ${highest}`);
         console.log(res)
-        await sendResponse(interaction, `added ${mcusr} to the role ${highest}`);
+        await interaction.editReply(`added ${mcusr} to the role ${highest}`);
         await rcon.end();
     }
 }
