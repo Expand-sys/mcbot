@@ -36,7 +36,7 @@ module.exports = {
                         channelSend("Server back online!")
                     }
                     restarted = 0;
-                }).catch((error) => {
+                }).catch(async (error) => {
                     console.log("Server is offline" + error);
                     serverofflinefor += 10
                     if(serverofflinefor <= 60){
@@ -44,8 +44,8 @@ module.exports = {
                     }
                     if(serverofflinefor == 60 && restarted != 1){
                         channelSend(`server Offline for 60 seconds Restarting`)
-                        const killer = spawn("screen", ['-XS', 'minecraft', 'quit'])
-                        const mc = spawn("screen", ['-dmS', 'minecraft', '/bin/bash', `${process.env.SERSTARTLOC}/ServerStart.sh`], {
+                        const killer = await spawn("screen", ['-XS', 'minecraft', 'quit'])
+                        const mc = await spawn("screen", ['-dmS', 'minecraft', '/bin/bash', `${process.env.SERSTARTLOC}/ServerStart.sh`], {
                             cwd: `${process.env.SERSTARTLOC}`
                         })
                         restarted = 1
