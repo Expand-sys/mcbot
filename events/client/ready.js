@@ -42,7 +42,7 @@ module.exports = {
                     if(serverofflinefor == 60 && restarted != 1){
                         channelSend(`server Offline for 60 seconds Restarting`)
                         const killer = spawn("screen", ['-XS', 'minecraft'])
-                        const mc = spawn("screen", ['-dmS', 'minecraft', '/bin/bash', `${process.env.SERSTARTLOC}`], {
+                        const mc = spawn("screen", ['-dmS', 'minecraft', '/bin/bash', `${process.env.SERSTARTLOC}/ServerStart.sh`], {
                             cwd: `${process.env.SERSTARTLOC}`
                         })
                         restarted = 1
