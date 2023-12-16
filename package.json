@@ -1,7 +1,7 @@
 {
-  "name": "4dc",
+  "name": "mcbot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Boilerplate taken from 4DC bot, with some added features for a minecraft bot basically only used it for its layout barebones functionality",
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ignore-path .gitignore .",
@@ -19,16 +19,21 @@
     "discord-api-types": "^0.20.2",
     "discord.js": "^14.7.0",
     "dotenv": "^9.0.2",
+    "gamedig": "^4.3.0",
     "gifencoder": "^2.0.1",
     "glob": "^7.2.0",
-    "mongoose": "^6.3.4",
-    "nodemon": "^2.0.19",
     "os": "^0.1.2",
-    "pm2": "^5.1.2",
     "rcon-client": "^4.2.3",
     "rss-parser": "^3.12.0",
-    "sharp": "^0.31.3",
     "uuid": "^8.3.2",
     "winston": "^3.8.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Expand-sys/mcbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Expand-sys/mcbot/issues"
+  },
+  "homepage": "https://github.com/Expand-sys/mcbot#readme"
 }

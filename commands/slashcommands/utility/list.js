@@ -2,8 +2,6 @@ const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType
 const { sendResponse, sendReply, channelSend } = require('../../../utils/utils');
 const path = require('path');
 const { Rcon } = require("rcon-client");
-const rconpass = process.env.RCONPASS;
-const host = process.env.MCHOST;
 
 
 
@@ -16,26 +14,24 @@ module.exports = {
      * @param {CommandInteraction} interaction 
      */
     async execute(interaction) {
-        console.log("test")
-        console.log(host);
-        const rcon = new Rcon({
-          host: `${host}`,
-          port: `${process.env.RCON_PORT}`,
-          password: `${rconpass}`,
-        });
-        let connected = true
-        let error
-        try{
-          await rcon.connect();
-        } catch(e){
-          console.log(e)
-          connected = false
-          error = e
-        }
-        let res = await rcon.send(`list`);
-        console.log(res)
-        var rep = res.replace(/§[6crf7]/g, "");
-        interaction.reply(`${rep}`, [],[],[], false);
-        rcon.end();
-    }
+      const { member, guild, options } = interaction
+      await interaction.deferReply({ ephemeral: true }).catch(err => console.error(`There was a problem deferring an interaction: `, err));
+      const rcon = new Rcon({
+        host: `${process.env.MCHOST}`,
+        port: parseInt(process.env.RCON_PORT),
+        password: `${process.env.RCON_PASS}`,
+      });
+      let connected = true
+      
+      try{
+        await rcon.connect();
+      } catch(e){
+        console.log(e)
+        connected = false
+        sendResponse(interaction, `error sending command: ${e}`);
+      }
+      let res = await rcon.send(`list`);
+      rcon.end();
+      sendResponse(interaction, `${res}`);
+    },
 }

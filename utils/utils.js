@@ -1,6 +1,5 @@
 const { CommandInteraction } = require('discord.js');
 const attachmentMap = new Map();
-const winston = require('winston');
 const { client } = require("../index")
 
 /**

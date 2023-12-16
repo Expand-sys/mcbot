@@ -1,6 +1,6 @@
 module.exports = {
     apps: [{
-        name: "NTCMCbot",
+        name: "MCbot",
         script: "./index.js",
         watch: true,
         ignore_watch: ["./res/temp"],
