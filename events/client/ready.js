@@ -32,6 +32,9 @@ module.exports = {
                     //console.log(state);
                     //console.log(state.players)
                     serverofflinefor = 0;
+                    if(restarted == 1){
+                        channelSend("Server back online!")
+                    }
                     restarted = 0;
                 }).catch((error) => {
                     console.log("Server is offline" + error);
