@@ -23,10 +23,10 @@ module.exports = {
         }).then((state) => {
             //console.log(state);
             //console.log(state.players)
-            interaction.sendResponse(state)
+            interaction.sendReply(state)
         }).catch(async (error) => {
             console.log("Server is offline " + error);
-            interaction.sendResponse("Server is offline")
+            interaction.sendReply("Server is offline")
         });
     },
 }
