@@ -22,8 +22,6 @@ module.exports = {
         function runevery30seconds(i) {
             setTimeout(() => {
                 
-                
-                
                 dig.query({
                     type: 'minecraft',
                     host: process.env.MCHOST,
@@ -37,13 +35,13 @@ module.exports = {
                     }
                     restarted = 0;
                 }).catch(async (error) => {
-                    console.log("Server is offline" + error);
+                    console.log("Server is offline " + error);
                     serverofflinefor += 10
                     if(serverofflinefor <= 60){
                         channelSend(`Server offline for ~${serverofflinefor}`)    
                     }
                     if(serverofflinefor == 60 && restarted != 1){
-                        channelSend(`server Offline for 60 seconds Restarting`)
+                        channelSend(`Server Offline for 60 seconds Restarting`)
                         const killer = await spawn("screen", ['-XS', 'minecraft', 'quit'])
                         const mc = await spawn("screen", ['-dmS', 'minecraft', '/bin/bash', `${process.env.SERSTARTLOC}/ServerStart.sh`], {
                             cwd: `${process.env.SERSTARTLOC}`

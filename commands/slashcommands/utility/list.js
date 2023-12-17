@@ -15,7 +15,7 @@ module.exports = {
      */
     async execute(interaction) {
       const { member, guild, options } = interaction
-      await interaction.deferReply({ ephemeral: true }).catch(err => console.error(`There was a problem deferring an interaction: `, err));
+      await interaction.deferReply({ ephemeral: false }).catch(err => console.error(`There was a problem deferring an interaction: `, err));
       const rcon = new Rcon({
         host: `${process.env.MCHOST}`,
         port: parseInt(process.env.RCON_PORT),
