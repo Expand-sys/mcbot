@@ -8,6 +8,25 @@ const dig = require("gamedig")
 
 const path = require('path');
 const { channelSend } = require('../../utils/utils');
+
+
+
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await dbclient.connect();
+    // Send a ping to confirm a successful connection
+    await dbclient.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await dbclient.close();
+  }
+}
+run().catch(console.dir);
+
+count = 0
+
 serverofflinefor = 0;
 let restarted = 0;
 module.exports = {
@@ -26,14 +45,32 @@ module.exports = {
                     type: 'minecraft',
                     host: process.env.MCHOST,
                     port: process.env.MCHOSTPORT,
-                }).then((state) => {
+                }).then(async (state) => {
                     //console.log(state);
-                    //console.log(state.players)
+                    console.log(state.players)
                     serverofflinefor = 0;
                     if(restarted == 1){
                         channelSend("Server back online!")
                     }
                     restarted = 0;
+                    count +=1
+                    //this will be where i do the tracking logic for how long people have been on the server
+                    if(count == 6){
+                        await dbclient.connect()
+                        //let ping = await dbclient.db("timetracking").command({ ping: 1})
+                        //console.log(ping)
+                        let collection = await dbclient.db("timetracking").collection("times")
+                        for(i = 0; i < state.players.length; i++){
+                            const query = { name: `${state.players[i].name}`}
+                            const update = { $inc: { time: 1 }}
+                            const options = { upsert: true }
+                            await collection.findOneAndUpdate(query, update, options)
+                            console.log("butts")
+                        }
+                        await dbclient.close()
+                        count = 0
+                    }
+                    
                 }).catch(async (error) => {
                     console.log("Server is offline " + error);
                     serverofflinefor += 10
@@ -42,10 +79,11 @@ module.exports = {
                     }
                     if(serverofflinefor == 60 && restarted != 1){
                         channelSend(`Server Offline for 60 seconds Restarting`)
-                        const killer = await spawn("screen", ['-XS', 'minecraft', 'quit'])
-                        const mc = await spawn("screen", ['-dmS', 'minecraft', '/bin/bash', `${process.env.SERSTARTLOC}/ServerStart.sh`], {
-                            cwd: `${process.env.SERSTARTLOC}`
-                        })
+                        //this is commented out temporarily to stop the server trying to start on my local machine but has been tested as working
+                        //const killer = await spawn("screen", ['-XS', 'minecraft', 'quit'])
+                        //const mc = await spawn("screen", ['-dmS', 'minecraft', '/bin/bash', `${process.env.SERSTARTLOC}/ServerStart.sh`], {
+                            //cwd: `${process.env.SERSTARTLOC}`
+                        //})
                         restarted = 1
                     }
                 });

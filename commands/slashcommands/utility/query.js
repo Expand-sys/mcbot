@@ -21,12 +21,12 @@ module.exports = {
         host: process.env.MCHOST,
         port: process.env.MCHOSTPORT,
         }).then((state) => {
-            //console.log(state);
+            console.log(state);
             //console.log(state.players)
-            sendResponse(interaction, `${JSON.stringify(state)}`)
+            //sendResponse(interaction, `${JSON.stringify(state)}`)
         }).catch(async (error) => {
             console.log("Server is offline " + error);
-            sendResponse(interaction, "Server is offline")
+            //sendResponse(interaction, "Server is offline")
         });
     },
 }
