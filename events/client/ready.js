@@ -8,6 +8,7 @@ const dig = require("gamedig")
 
 const path = require('path');
 const { channelSend } = require('../../utils/utils');
+const { dbclient } = require('../../index');
 
 
 
