@@ -4,7 +4,7 @@ const fs = require('fs');
 const { promisify } = require('util');
 const { glob } = require('glob');
 const PG = promisify(glob);
-import { GameDig } from "gamedig"
+const { GameDig } = require("gamedig")
 
 const path = require('path');
 const { channelSend } = require('../../utils/utils');

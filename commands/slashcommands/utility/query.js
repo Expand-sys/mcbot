@@ -2,7 +2,7 @@ const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType
 const { sendResponse, sendReply, channelSend } = require('../../../utils/utils');
 const path = require('path');
 const { Rcon } = require("rcon-client");
-import { GameDig } from "gamedig"
+const { GameDig } = require("gamedig")
 
 
 module.exports = {
