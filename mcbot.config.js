@@ -4,5 +4,6 @@ module.exports = {
         script: "./index.js",
         watch: true,
         ignore_watch: ["./res/temp"],
+        interpreter: "~/.bun/bin/bun",
     }]
 }
