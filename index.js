@@ -35,7 +35,7 @@ process.on('SIGINT', (code) => {
 
 module.exports = {
     client,
-    dbclient
+    //dbclient
 }
 
 client.login(process.env.BOT_TOKEN);

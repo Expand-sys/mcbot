@@ -4,7 +4,7 @@ const fs = require('fs');
 const { promisify } = require('util');
 const { glob } = require('glob');
 const PG = promisify(glob);
-const dig = require("gamedig")
+import { GameDig } from gamedig
 
 const path = require('path');
 const { channelSend } = require('../../utils/utils');
@@ -42,7 +42,7 @@ module.exports = {
         function runevery30seconds(i) {
             setTimeout(() => {
                 
-                dig.query({
+                GameDig.query({
                     type: 'minecraft',
                     host: process.env.MCHOST,
                     port: process.env.MCHOSTPORT,
@@ -56,11 +56,11 @@ module.exports = {
                     restarted = 0;
                     count +=1
                     //this will be where i do the tracking logic for how long people have been on the server
-                    if(count == 6){
+                    /*if(count == 6){
                         await dbclient.connect()
                         //let ping = await dbclient.db("timetracking").command({ ping: 1})
                         //console.log(ping)
-                        let collection = await dbclient.db("timetracking").collection("times")
+                        //let collection = await dbclient.db("timetracking").collection("times")
                         for(i = 0; i < state.players.length; i++){
                             const query = { name: `${state.players[i].name}`}
                             const update = { $inc: { time: 1 }}
@@ -70,7 +70,7 @@ module.exports = {
                         }
                         await dbclient.close()
                         count = 0
-                    }
+                    }*/
                     
                 }).catch(async (error) => {
                     console.log("Server is offline " + error);
