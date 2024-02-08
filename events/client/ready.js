@@ -24,7 +24,7 @@ async function run() {
     await dbclient.close();
   }
 }
-run().catch(console.dir);
+//run().catch(console.dir);
 
 count = 0
 
@@ -81,10 +81,10 @@ module.exports = {
                     if(serverofflinefor == 60 && restarted != 1){
                         channelSend(`Server Offline for 60 seconds Restarting`)
                         //this is commented out temporarily to stop the server trying to start on my local machine but has been tested as working
-                        //const killer = await spawn("screen", ['-XS', 'minecraft', 'quit'])
-                        //const mc = await spawn("screen", ['-dmS', 'minecraft', '/bin/bash', `${process.env.SERSTARTLOC}/ServerStart.sh`], {
-                            //cwd: `${process.env.SERSTARTLOC}`
-                        //})
+                        const killer = await spawn("tmux", ['kill-session', '-t', 'minecraft'])
+                        const mc = await spawn("tmux", ['new', '-ds', 'minecraft', `${process.env.SERSTARTLOC}/run.sh`], {
+                            cwd: `${process.env.SERSTARTLOC}`
+                        })
                         restarted = 1
                     }
                 });

@@ -4,16 +4,16 @@ const Discord = require("discord.js");
 
 const client = new Discord.Client({ intents: [Discord.GatewayIntentBits.Guilds, Discord.GatewayIntentBits.GuildMembers], partials: [Discord.Partials.Channel] });
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `${process.env.MONGOCONN}`;
+//const { MongoClient, ServerApiVersion } = require('mongodb');
+//const uri = `${process.env.MONGOCONN}`;
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const dbclient = new MongoClient(uri, {
+/*const dbclient = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
     deprecationErrors: true,
   }
-});
+});*/
 
 
 
