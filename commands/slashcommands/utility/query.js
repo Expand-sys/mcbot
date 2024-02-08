@@ -2,7 +2,7 @@ const { CommandInteraction, ApplicationCommandType, ApplicationCommandOptionType
 const { sendResponse, sendReply, channelSend } = require('../../../utils/utils');
 const path = require('path');
 const { Rcon } = require("rcon-client");
-const dig = require("gamedig")
+import { GameDig } from gamedig
 
 
 module.exports = {
@@ -16,7 +16,7 @@ module.exports = {
     async execute(interaction) {
       const { member, guild, options } = interaction
       await interaction.deferReply({ ephemeral: false }).catch(err => console.error(`There was a problem deferring an interaction: `, err));
-      dig.query({
+      GameDig.query({
         type: 'minecraft',
         host: process.env.MCHOST,
         port: process.env.MCHOSTPORT,
